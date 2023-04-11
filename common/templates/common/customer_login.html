@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method = "POST">
+        {% csrf_token %}
+        <label for="">username</label>
+        <input type="text" name="cname" placeholder="Enter your Name"><br>
+        <label for="">password</label>
+        <input type="password" name="cpassword" placeholder="Enter your password"><br>
+        <!-- <label for="">Mobile</label>
+        <input type="text" name="cnumber" placeholder="Enter your Number"><br>
+        <label for="">Password</label>
+        <input type="password" name="cpassword" placeholder="Enter your Password"><br><br> -->
+        <input type="submit">
+        {{message}}
+    </form>
+</body>
+</html>

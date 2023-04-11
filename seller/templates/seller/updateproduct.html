@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center">
+         <tr>
+             <td>
+                 <label for="">select category</label>
+                 <select name="product" id="prd1">
+                    <option value="">select product</option>
+                    {% for product in products %}
+                    <option value="{{product.id}}">{{product.m_name}}</option>
+                    {% endfor %}
+                    
+                 </select>
+             </td>
+         </tr>
+         <tr>
+             <td>
+                
+                 <p align="center" >Product Name</p>
+                 <input type="text" size="50" align="" name="pname" id="pname">
+
+                 <p align="center">Description</p>
+                 <input type="text" size="50" name="description" id="pdesc"> 
+
+                 <p align="center">Product In Stock</p>      
+                 <input type="text" size="50" name="stock left" id="pstoc">                  
+
+                 <p align="center">Product price</p>
+                 <input type="text" size="50" name="price" id="ppric"><br><br>
+             </td>
+         </tr>
+         <tr><td>
+            <!-- <label for="">product image</label>
+            <input type="file" name="pimage"> -->
+         </td></tr>
+     <tr>
+         <td>
+     
+             <button>submit</button> {{message}}
+             </td>
+     </tr>
+        </table>
+</form>
+        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+        <script>
+                $(document).ready(function(){
+                    $.ajaxSetup({
+                        headers:{
+                            'X-CSRFToken':$('[name=csrfmiddlewaretoken]').val()
+                        }
+                    })
+                })
+                $('#prd1').change(function(){
+                    prd = this.value
+                    $.ajax({
+                        type:'POST',
+                        url:'{% url "seller:getproduct" %}',
+                        data : {
+                            'id':prd
+                        },
+                         success:function(response){
+                            console.log(response.data)
+                            data = response.data
+                            $('#pname').val(data[0].m_name)
+                            $('#pdesc').val(data[0].m_description)
+                            // $('#pcate').val(data[0].m_category)
+                            $('#ppric').val(data[0].m_price)
+                            
+                    
+                         }
+
+                    })
+                })
+
+        </script>
+        
+</body>
+</html>
